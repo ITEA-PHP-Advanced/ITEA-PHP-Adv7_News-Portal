@@ -10,10 +10,10 @@
         {% if latesArticle is not null %}
             <article class="main-post top-post">
                 <a href="#" class="category-link">{{ latesArticle.categoryTitle }}</a>
-                <a href="#">
+                <a href="{{ path('app_article_view', {'id': latesArticle.id}) }}">
                     <img src="{{ asset(latesArticle.image) }}" alt="" class="img-fluid">
                 </a>
-                <a href="#" class="post-link">
+                <a href="{{ path('app_article_view', {'id': latesArticle.id}) }}" class="post-link">
                     <h1>{{ latesArticle.title }}</h1>
                 </a>
                 <time>{{ latesArticle.publicationDate | date('d-m-Y') }}</time>
@@ -27,10 +27,10 @@
                 <div class="col-3">
                     <article class="post top-post">
                         <a href="#" class="category-link">{{ article.categoryTitle }}</a>
-                        <a href="#">
+                        <a href="{{ path('app_article_view', {'id': article.id}) }}">
                             <img src="{{ asset(article.image) }}" alt="" class="img-fluid">
                         </a>
-                        <a href="#" class="post-link">
+                        <a href="{{ path('app_article_view', {'id': article.id}) }}" class="post-link">
                             <h3>{{ article.title }}</h3>
                         </a>
                         <time>{{ latesArticle.publicationDate | date('d-m-Y') }}</time>
@@ -45,7 +45,7 @@
         {% for article in articles %}
             <article class="post">
                 <a href="#" class="category-link">{{ article.categoryTitle }}</a>
-                <a href="#"><h4>{{ article.title }}</h4></a>
+                <a href="{{ path('app_article_view', {'id': article.id}) }}"><h4>{{ article.title }}</h4></a>
                 <time>{{ article.publicationDate | date('d-m-Y') }}</time>
             </article>
         {% endfor %}

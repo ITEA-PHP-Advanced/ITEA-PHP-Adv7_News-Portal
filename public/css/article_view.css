@@ -1,0 +1,18 @@
+main > .container {
+    padding: 80px;
+}
+
+main {
+    padding-bottom: 60px;
+}
+
+main article.view > .category-link {
+    color: #DC3543;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+main article.view > .body {
+    font-size: 20px;
+    line-height: 34px;
+}
