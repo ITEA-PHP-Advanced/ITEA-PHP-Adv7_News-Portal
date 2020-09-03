@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use App\Exception\ArticleBodyCannotBeEmptyException;
 use App\Repository\ArticleRepository;
+use App\ViewModel\FullArticle;
 use App\ViewModel\HomePageArticle;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -65,6 +66,17 @@ class Article
             $this->publicationDate,
             $this->image,
             $this->shortDescription
+        );
+    }
+
+    public function getFullArticle(): FullArticle
+    {
+        return new FullArticle(
+            $this->id,
+            'Set category title here', // TODO: set category title
+            $this->title,
+            $this->body,
+            $this->publicationDate
         );
     }
 

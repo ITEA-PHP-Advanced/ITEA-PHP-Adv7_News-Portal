@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Article;
+use App\Exception\EntityNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -24,17 +26,48 @@ final class ArticleRepository extends ServiceEntityRepository
     }
 
     /**
+     * @throws EntityNotFoundException
+     */
+    public function getById(int $id): Article
+    {
+        $query = $this->addPublished()
+            ->andWhere('a.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+        ;
+
+        $article = $query->getOneOrNullResult();
+
+        if (null === $article) {
+            throw new EntityNotFoundException('Article', $id);
+        }
+
+        return $article;
+    }
+
+    /**
      * @return Article[]
      */
     public function getLatestPublished(): array
     {
-        $query = $this->createQueryBuilder('a')
-            ->where('a.publicationDate IS NOT NULL')
+        $query = $this->addPublished()
             ->setMaxResults(self::LATEST_PUBLISHED_ARTICLES_COUNT)
             ->orderBy('a.publicationDate', 'DESC')
             ->getQuery()
         ;
 
         return $query->getResult();
+    }
+
+    private function addPublished(?QueryBuilder $qb = null): QueryBuilder
+    {
+        return $this->getOrCreateQueryBuilder($qb)
+            ->andWhere('a.publicationDate IS NOT NULL')
+        ;
+    }
+
+    private function getOrCreateQueryBuilder(?QueryBuilder $qb = null): QueryBuilder
+    {
+        return $qb ?? $this->createQueryBuilder('a');
     }
 }
