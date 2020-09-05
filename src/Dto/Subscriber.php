@@ -6,7 +6,7 @@ namespace App\Dto;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-class Subscriber
+final class Subscriber
 {
     /**
      * @Assert\Length(

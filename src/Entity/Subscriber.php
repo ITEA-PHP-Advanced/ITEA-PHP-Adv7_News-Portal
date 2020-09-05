@@ -32,39 +32,10 @@ class Subscriber
      */
     private string $email;
 
-    public function getId(): ?int
+    public function __construct(SubscriberDto $dto)
     {
-        return $this->id;
+        $this->name = $dto->getName();
+        $this->email = $dto->getEmail();
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public static function create(SubscriberDto $dto): self
-    {
-        return (new Subscriber())
-            ->setName($dto->getName())
-            ->setEmail($dto->getEmail());
-    }
 }

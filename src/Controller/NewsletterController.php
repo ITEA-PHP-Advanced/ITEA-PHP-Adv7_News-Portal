@@ -6,7 +6,9 @@ namespace App\Controller;
 
 use App\Dto\Subscriber as SubscriberDto;
 use App\Entity\Subscriber;
+use App\Form\SubscriptionType;
 use App\Repository\SubscriberRepositoryInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -17,13 +19,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class NewsletterController extends AbstractController
+final class NewsletterController extends AbstractController
 {
-    private SubscriberRepositoryInterface $subscriberRepository;
+    private EntityManagerInterface $em;
 
-    public function __construct(SubscriberRepositoryInterface $subscriberRepository)
+    public function __construct(EntityManagerInterface $em)
     {
-        $this->subscriberRepository = $subscriberRepository;
+        $this->em = $em;
     }
 
     /**
@@ -33,38 +35,25 @@ class NewsletterController extends AbstractController
      */
     public function form(Request $request, ValidatorInterface $validator)
     {
-        $form = $this->createFormBuilder()
-            ->setAction($this->generateUrl('app_newsletter_form'))
-            ->add('name', TextType::class, [
-                'attr' => [
-                    'placeholder' => 'Name',
-                ],
-            ])
-            ->add('email', EmailType::class, [
-                'attr' => [
-                    'placeholder' => 'Email',
-                ],
-            ])
-            ->add('subscribe', SubmitType::class)
-            ->getForm();
+        $form = $this->createForm(SubscriptionType::class, null, [
+            'action' => $this->generateUrl('app_newsletter_form')
+        ]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $name = $form->getData()['name'];
-            $email = $form->getData()['email'];
-
-            $subscriberDto = new SubscriberDto($name, $email);
+            $subscriberDto = $form->getData();
 
             $errors = $validator->validate($subscriberDto);
 
             if (0 === count($errors)) {
-                $subscriber = Subscriber::create($subscriberDto);
+                $subscriber = new Subscriber($subscriberDto);
 
                 $errors = $validator->validate($subscriber);
 
                 if (0 === count($errors)) {
                     try {
-                        $this->subscriberRepository->save($subscriber);
+                        $this->em->persist($subscriber);
+                        $this->em->flush();
                     } catch (ORMException $e) {
                         $this->addFlash('error', $e->getMessage());
                     }
@@ -79,7 +68,7 @@ class NewsletterController extends AbstractController
                 }
             }
 
-            return $this->redirect($request->server->get('HTTP_REFERER'));
+            return $this->redirect($request->headers->get('referer'));
         }
 
         return $this->render('newsletter/form.html.twig', [
