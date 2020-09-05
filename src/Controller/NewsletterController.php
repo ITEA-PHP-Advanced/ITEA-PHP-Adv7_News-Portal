@@ -7,7 +7,6 @@ namespace App\Controller;
 use App\Dto\Subscriber as SubscriberDto;
 use App\Entity\Subscriber;
 use App\Repository\SubscriberRepositoryInterface;
-use Doctrine\DBAL\Exception\ConstraintViolationException;
 use Doctrine\ORM\ORMException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -29,8 +28,7 @@ class NewsletterController extends AbstractController
 
     /**
      * @Route("/newsletter/form", methods={"POST"}, name="app_newsletter_form")
-     * @param Request $request
-     * @param ValidatorInterface $validator
+     *
      * @return Response
      */
     public function form(Request $request, ValidatorInterface $validator)
@@ -39,13 +37,13 @@ class NewsletterController extends AbstractController
             ->setAction($this->generateUrl('app_newsletter_form'))
             ->add('name', TextType::class, [
                 'attr' => [
-                    'placeholder' => 'Name'
-                ]
+                    'placeholder' => 'Name',
+                ],
             ])
             ->add('email', EmailType::class, [
                 'attr' => [
-                    'placeholder' => 'Email'
-                ]
+                    'placeholder' => 'Email',
+                ],
             ])
             ->add('subscribe', SubmitType::class)
             ->getForm();
@@ -59,12 +57,12 @@ class NewsletterController extends AbstractController
 
             $errors = $validator->validate($subscriberDto);
 
-            if (count($errors) === 0) {
+            if (0 === count($errors)) {
                 $subscriber = Subscriber::create($subscriberDto);
 
                 $errors = $validator->validate($subscriber);
 
-                if (count($errors) === 0) {
+                if (0 === count($errors)) {
                     try {
                         $this->subscriberRepository->save($subscriber);
                     } catch (ORMException $e) {
@@ -85,7 +83,7 @@ class NewsletterController extends AbstractController
         }
 
         return $this->render('newsletter/form.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 }

@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
+use App\Dto\Subscriber as SubscriberDto;
 use App\Repository\SubscriberRepository;
 use Doctrine\ORM\Mapping as ORM;
-use App\Dto\Subscriber as SubscriberDto;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
