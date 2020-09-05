@@ -7,11 +7,9 @@ namespace App\Entity;
 use App\Dto\Subscriber as SubscriberDto;
 use App\Repository\SubscriberRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=SubscriberRepository::class)
- * @UniqueEntity("email", message="{{ value }} is already in use.")
  */
 class Subscriber
 {
@@ -37,5 +35,4 @@ class Subscriber
         $this->name = $dto->getName();
         $this->email = $dto->getEmail();
     }
-
 }

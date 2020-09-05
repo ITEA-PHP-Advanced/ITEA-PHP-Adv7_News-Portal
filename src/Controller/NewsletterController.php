@@ -4,16 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Dto\Subscriber as SubscriberDto;
 use App\Entity\Subscriber;
 use App\Form\SubscriptionType;
-use App\Repository\SubscriberRepositoryInterface;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\ORMException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,31 +31,23 @@ final class NewsletterController extends AbstractController
     public function form(Request $request, ValidatorInterface $validator)
     {
         $form = $this->createForm(SubscriptionType::class, null, [
-            'action' => $this->generateUrl('app_newsletter_form')
+            'action' => $this->generateUrl('app_newsletter_form'),
         ]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $subscriberDto = $form->getData();
 
-            $errors = $validator->validate($subscriberDto);
+            $errors = $form->getErrors();
 
             if (0 === count($errors)) {
                 $subscriber = new Subscriber($subscriberDto);
 
-                $errors = $validator->validate($subscriber);
-
-                if (0 === count($errors)) {
-                    try {
-                        $this->em->persist($subscriber);
-                        $this->em->flush();
-                    } catch (ORMException $e) {
-                        $this->addFlash('error', $e->getMessage());
-                    }
-                } else {
-                    foreach ($errors as $error) {
-                        $this->addFlash('error', $error->getMessage());
-                    }
+                try {
+                    $this->em->persist($subscriber);
+                    $this->em->flush();
+                } catch (UniqueConstraintViolationException $e) {
+                    $this->addFlash('error', $e->getMessage());
                 }
             } else {
                 foreach ($errors as $error) {

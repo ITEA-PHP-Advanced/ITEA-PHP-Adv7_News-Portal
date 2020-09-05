@@ -14,11 +14,10 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Subscriber[]    findAll()
  * @method Subscriber[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SubscriberRepository extends ServiceEntityRepository
+final class SubscriberRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Subscriber::class);
     }
-
 }

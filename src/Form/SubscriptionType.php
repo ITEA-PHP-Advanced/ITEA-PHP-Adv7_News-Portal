@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Form;
-
 
 use App\Dto\Subscriber;
 use Symfony\Component\Form\AbstractType;
@@ -37,7 +37,7 @@ final class SubscriptionType extends AbstractType implements DataMapperInterface
     {
         $resolver->setDefaults([
             'data_class' => Subscriber::class,
-            'empty_data' => null
+            'empty_data' => null,
         ]);
     }
 
