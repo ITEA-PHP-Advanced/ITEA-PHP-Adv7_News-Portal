@@ -1,0 +1,15 @@
+<h4 class="subscription-form-heading">SUBSCRIBE TO OUR NEWSLETTER</h4>
+{{ form_start(form, {'attr': {'class': 'subscription-form'}}) }}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger text-left">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h5 class="alert-heading">Error</h5>
+            {{ message }}
+        </div>
+    {% endfor %}
+    {{ form_widget(form.name) }}
+    {{ form_widget(form.email) }}
+    {{ form_widget(form.subscribe, {'attr': {'class': 'subscription-form-submit-btn'}}) }}
+{{ form_end(form) }}
