@@ -27,7 +27,13 @@
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "friendsofphp/php-cs-fixer": "^2.16",
         "fzaninotto/faker": "^1.9",
-        "symfony/maker-bundle": "^1.21"
+        "symfony/debug-bundle": "^5.1",
+        "symfony/maker-bundle": "^1.21",
+        "symfony/monolog-bundle": "^3.0",
+        "symfony/stopwatch": "^5.1",
+        "symfony/twig-bundle": "^5.1",
+        "symfony/var-dumper": "^5.1",
+        "symfony/web-profiler-bundle": "^5.1"
     },
     "config": {
         "optimize-autoloader": true,
