@@ -21,6 +21,7 @@ services:
             - '../src/ViewModel'
             - '../src/Exception'
             - '../src/Collection'
+            - '../src/Util'
             - '../src/Kernel.php'
 
     # controllers are imported separately to make sure services can be injected

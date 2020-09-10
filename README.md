@@ -52,3 +52,12 @@ to fix the code style run next command
 ```bash
 $ composer cs-fix
 ```
+
+Tests
+-----
+
+To run unit tests just run the following command
+
+```bash
+$ ./bin/phpunit
+```
