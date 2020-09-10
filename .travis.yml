@@ -23,4 +23,5 @@ install:
 
 # run tests
 script:
+  - composer cs-check
   - ./bin/phpunit
