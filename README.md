@@ -1,5 +1,7 @@
 # News Portal
 
+[![Build Status](https://travis-ci.org/ITEA-PHP-Advanced/ITEA-PHP-Adv7_News-Portal.svg?branch=dev)](https://travis-ci.org/ITEA-PHP-Advanced/ITEA-PHP-Adv7_News-Portal)
+
 ## Installation
 
 1. Clone repository
