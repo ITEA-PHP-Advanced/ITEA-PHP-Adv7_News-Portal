@@ -62,7 +62,7 @@ class Article
     {
         Assert::notEmpty($title);
 
-        $this->title = $title;
+        $this->title = $title.'TEST';
         $this->createdAt = $this->updatedAt = new \DateTimeImmutable();
     }
 
