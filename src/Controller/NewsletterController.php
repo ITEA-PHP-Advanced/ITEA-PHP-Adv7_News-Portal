@@ -32,7 +32,6 @@ final class NewsletterController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
-
             if ($form->isValid()) {
                 $this->subscriberService->create($form->getData());
             } else {
