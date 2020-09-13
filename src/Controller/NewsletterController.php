@@ -31,12 +31,13 @@ final class NewsletterController extends AbstractController
         ]);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $errors = $form->getErrors();
+        if ($form->isSubmitted()) {
 
-            if (0 === count($errors)) {
+            if ($form->isValid()) {
                 $this->subscriberService->create($form->getData());
             } else {
+                $errors = $form->getErrors(true);
+
                 foreach ($errors as $error) {
                     $this->addFlash('error', $error->getMessage());
                 }
