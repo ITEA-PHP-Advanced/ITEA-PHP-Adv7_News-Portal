@@ -18,7 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 final class ArticleRepository extends ServiceEntityRepository
 {
-    private const LATEST_PUBLISHED_ARTICLES_COUNT = 10;
+    private const DEFAULT_LATEST_PUBLISHED_ARTICLES_LIMIT = 10;
 
     public function __construct(ManagerRegistry $registry)
     {
@@ -48,10 +48,10 @@ final class ArticleRepository extends ServiceEntityRepository
     /**
      * @return Article[]
      */
-    public function getLatestPublished(): array
+    public function getLatestPublished(int $limit = self::DEFAULT_LATEST_PUBLISHED_ARTICLES_LIMIT): array
     {
         $query = $this->addPublished()
-            ->setMaxResults(self::LATEST_PUBLISHED_ARTICLES_COUNT)
+            ->setMaxResults($limit)
             ->orderBy('a.publicationDate', 'DESC')
             ->getQuery()
         ;

@@ -1,5 +1,7 @@
 # News Portal
 
+[![Build Status](https://travis-ci.org/ITEA-PHP-Advanced/ITEA-PHP-Adv7_News-Portal.svg?branch=dev)](https://travis-ci.org/ITEA-PHP-Advanced/ITEA-PHP-Adv7_News-Portal)
+
 ## Installation
 
 1. Clone repository
@@ -23,7 +25,7 @@
     ```dotenv
     DATABASE_URL=mysql://<user>:<password>@127.0.0.1:3306/<db_name>
     ```
-   
+    
 4. Create a database and run migrations
 
     ```sh
@@ -51,4 +53,13 @@ to fix the code style run next command
 
 ```bash
 $ composer cs-fix
+```
+
+Tests
+-----
+
+To run unit tests just run the following command
+
+```bash
+$ ./bin/phpunit
 ```

@@ -16,7 +16,7 @@
                 <a href="{{ path('app_article_view', {'id': latesArticle.id}) }}" class="post-link">
                     <h1>{{ latesArticle.title }}</h1>
                 </a>
-                <time>{{ latesArticle.publicationDate | date('d-m-Y') }}</time>
+                <time>{{ latesArticle.publicationDate | formatted_date }}</time>
                 <p>{{ latesArticle.shortDescription }}</p>
                 <div class="clearfix"></div>
             </article>
@@ -33,7 +33,7 @@
                         <a href="{{ path('app_article_view', {'id': article.id}) }}" class="post-link">
                             <h3>{{ article.title }}</h3>
                         </a>
-                        <time>{{ latesArticle.publicationDate | date('d-m-Y') }}</time>
+                        <time>{{ latesArticle.publicationDate | formatted_date }}</time>
                         <p>{{ article.shortDescription }}</p>
                     </article>
                 </div>
@@ -46,7 +46,7 @@
             <article class="post">
                 <a href="#" class="category-link">{{ article.categoryTitle }}</a>
                 <a href="{{ path('app_article_view', {'id': article.id}) }}"><h4>{{ article.title }}</h4></a>
-                <time>{{ article.publicationDate | date('d-m-Y') }}</time>
+                <time>{{ article.publicationDate | formatted_date }}</time>
             </article>
         {% endfor %}
     </section>
