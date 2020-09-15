@@ -6,10 +6,17 @@ namespace App\Exception;
 
 class EntityNotFoundException extends \RuntimeException
 {
-    public function __construct(string $entityName, int $id)
+    public static function byId(string $entityName, int $id): self
     {
         $message = \sprintf('Entity "%s" with ID %d not found.', $entityName, $id);
 
-        parent::__construct($message);
+        return new self($message);
+    }
+
+    public static function bySlug(string $entityName, string $slug): self
+    {
+        $message = \sprintf('Entity "%s" with slug "%s" not found.', $entityName, $slug);
+
+        return new self($message);
     }
 }

@@ -39,7 +39,7 @@ final class ArticleRepository extends ServiceEntityRepository
         $article = $query->getOneOrNullResult();
 
         if (null === $article) {
-            throw new EntityNotFoundException('Article', $id);
+            throw EntityNotFoundException::byId('Article', $id);
         }
 
         return $article;
