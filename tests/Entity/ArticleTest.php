@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Entity;
 
 use App\Entity\Article;
+use App\Entity\Category;
 use App\Exception\ArticleBodyCannotBeEmptyException;
 use App\Exception\ArticleImageCannotBeEmptyException;
 use App\Exception\ArticleShortDescriptionCannotBeEmptyException;
@@ -15,7 +16,7 @@ final class ArticleTest extends TestCase
     public function testCreate(): void
     {
         $title = 'This is test.';
-        $article = new Article($title);
+        $article = new Article($this->getCategory(), $title);
 
         static::assertEquals($title, $article->getTitle(), 'Title must be set.');
         static::assertSame(
@@ -29,12 +30,12 @@ final class ArticleTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        new Article('');
+        new Article($this->getCategory(), '');
     }
 
     public function testPublish(): void
     {
-        $article = new Article('This is test.');
+        $article = new Article($this->getCategory(), 'This is test.');
         $article
             ->addImage('/img/test.png')
             ->addShortDescription('This is test short description.')
@@ -52,7 +53,7 @@ final class ArticleTest extends TestCase
     {
         $this->expectException(ArticleImageCannotBeEmptyException::class);
 
-        $article = new Article('This is test.');
+        $article = new Article($this->getCategory(), 'This is test.');
         $article
             ->addShortDescription('This is test short description.')
             ->addBody('This is test body.')
@@ -65,7 +66,7 @@ final class ArticleTest extends TestCase
     {
         $this->expectException(ArticleShortDescriptionCannotBeEmptyException::class);
 
-        $article = new Article('This is test.');
+        $article = new Article($this->getCategory(), 'This is test.');
         $article
             ->addImage('/img/test.png')
             ->addBody('This is test body.')
@@ -78,12 +79,17 @@ final class ArticleTest extends TestCase
     {
         $this->expectException(ArticleBodyCannotBeEmptyException::class);
 
-        $article = new Article('This is test.');
+        $article = new Article($this->getCategory(), 'This is test.');
         $article
             ->addImage('/img/test.png')
             ->addShortDescription('This is test short description.')
         ;
 
         $article->publish();
+    }
+
+    private function getCategory(): Category
+    {
+        return new Category('Test category.');
     }
 }
