@@ -5,13 +5,21 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 use App\Entity\Article;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-final class ArticleFixtures extends AbstractFixture
+final class ArticleFixtures extends AbstractFixture implements DependentFixtureInterface
 {
     private const ARTICLES_COUNT = 15;
 
-    public function load(ObjectManager $manager)
+    public function getDependencies(): array
+    {
+        return [
+            CategoryFixtures::class,
+        ];
+    }
+
+    public function load(ObjectManager $manager): void
     {
         for ($i = 0; $i < self::ARTICLES_COUNT; ++$i) {
             $article = $this->createArticle();
@@ -28,7 +36,8 @@ final class ArticleFixtures extends AbstractFixture
 
     private function createArticle(): Article
     {
-        $article = new Article($this->generateTitle());
+        $category = $this->getReference($this->faker->randomElement(CategoryFixtures::CATEGORIES));
+        $article = new Article($category, $this->generateTitle());
 
         return $article
             ->addImage($this->faker->imageUrl())
