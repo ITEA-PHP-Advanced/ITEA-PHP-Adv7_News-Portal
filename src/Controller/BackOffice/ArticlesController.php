@@ -10,7 +10,6 @@ use App\Transformer\ArticleTransformer;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
-use League\Fractal\Serializer\JsonApiSerializer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,14 +25,11 @@ final class ArticlesController extends AbstractController
     private ValidatorInterface $validator;
     private Manager $fractal;
 
-    public function __construct(ArticleAuthorInterface $articleAuthor, ValidatorInterface $validator)
+    public function __construct(Manager $fractal, ArticleAuthorInterface $articleAuthor, ValidatorInterface $validator)
     {
         $this->articleAuthor = $articleAuthor;
         $this->validator = $validator;
-
-        // TODO: not hardcode base URL
-        $this->fractal = new Manager();
-        $this->fractal->setSerializer(new JsonApiSerializer('http://127.0.0.1'));
+        $this->fractal = $fractal;
     }
 
     /**

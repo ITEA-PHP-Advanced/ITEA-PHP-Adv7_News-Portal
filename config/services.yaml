@@ -36,3 +36,6 @@ services:
     App\Service\HomePageArticlesProvider:
         arguments:
             $showLimit: '%app.show_limit.articles_home_page%'
+
+    League\Fractal\Manager:
+        factory: ['@App\FractalManagerFactory', 'create']
