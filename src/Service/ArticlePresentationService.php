@@ -18,7 +18,7 @@ final class ArticlePresentationService implements ArticlePresentationInterface
 
     public function getById(int $id): FullArticle
     {
-        $article = $this->articleRepository->getById($id);
+        $article = $this->articleRepository->getPublishedById($id);
 
         return $article->getFullArticle();
     }

@@ -22,6 +22,17 @@ final class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
+    public function getById(int $id): Category
+    {
+        $category = $this->find($id);
+
+        if (null === $category) {
+            throw EntityNotFoundException::byId('Category', $id);
+        }
+
+        return $category;
+    }
+
     /**
      * @throws EntityNotFoundException
      */
