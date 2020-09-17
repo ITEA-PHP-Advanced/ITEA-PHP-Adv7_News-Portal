@@ -73,6 +73,31 @@ class Article
         $this->createdAt = $this->updatedAt = new \DateTimeImmutable();
     }
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getCategory(): Category
+    {
+        return $this->category;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function getShortDescription(): ?string
+    {
+        return $this->shortDescription;
+    }
+
+    public function getBody(): ?string
+    {
+        return $this->body;
+    }
+
     public function getTitle(): string
     {
         return $this->title;

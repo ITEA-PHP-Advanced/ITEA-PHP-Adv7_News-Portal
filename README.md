@@ -36,6 +36,10 @@
     $ ./bin/console doctrine:migrations:migrate
     ```   
 
+## API
+
+You can import [postman_collection.json](postman_collection.json) file to Postman to you prepared requests to back-office API.
+
 ## Code style fixer
 
 To check the code style just run the following command
