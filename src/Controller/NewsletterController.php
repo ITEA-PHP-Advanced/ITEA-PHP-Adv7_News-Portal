@@ -36,7 +36,7 @@ final class NewsletterController extends AbstractController
                 $this->subscriberService->create($form->getData());
             } else {
                 $errors = $form->getErrors(true);
-              
+
                 foreach ($errors as $error) {
                     $this->addFlash('error', $error->getMessage());
                 }
