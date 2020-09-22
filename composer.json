@@ -69,7 +69,8 @@
     },
     "scripts": {
         "auto-scripts": {
-            "cache:clear": "symfony-cmd"
+            "cache:clear": "symfony-cmd",
+            "symfony security:check": "script"
         },
         "post-install-cmd": [
             "@auto-scripts"
