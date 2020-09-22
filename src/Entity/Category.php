@@ -79,4 +79,10 @@ class Category
     {
         return new CategoryMenuItem($this->name, $this->slug);
     }
+
+    public function isSubscriptionNeeded(): bool
+    {
+        // TODO: add flag to database
+        return \in_array($this->name, ['IT']);
+    }
 }

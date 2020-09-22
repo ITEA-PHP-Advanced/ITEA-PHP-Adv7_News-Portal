@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Exception\EntityNotFoundException;
+use App\Exception\UserDoesNotHaveSubscriptionException;
 use App\Service\CategoryPresentationInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,13 +21,13 @@ final class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}", requirements={"slug": "^[a-z0-9]+(?:-[a-z0-9]+)*$"}, methods={"GET"}, name="app_category")
+     * @Route("/c/{slug}", requirements={"slug": "^[a-z0-9]+(?:-[a-z0-9]+)*$"}, methods={"GET"}, name="app_category")
      */
     public function index(string $slug): Response
     {
         try {
             $category = $this->categoryPresentation->getBySlug($slug);
-        } catch (EntityNotFoundException $e) {
+        } catch (EntityNotFoundException | UserDoesNotHaveSubscriptionException $e) {
             throw $this->createNotFoundException($e->getMessage(), $e);
         }
 
