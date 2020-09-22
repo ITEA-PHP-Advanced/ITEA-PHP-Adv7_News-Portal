@@ -24,6 +24,7 @@ final class UserFixtures extends AbstractFixture
         $adminUser = new User('admin@dev.com');
         $adminUserPass = $this->passwordEncoder->encodePassword($adminUser, 'dev');
         $adminUser->setPassword($adminUserPass);
+        $adminUser->grantAdminAccess();
 
         $manager->persist($adminUser);
 

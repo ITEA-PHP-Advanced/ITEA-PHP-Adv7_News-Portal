@@ -13,6 +13,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+    public const ROLE_ADMIN = 'ROLE_ADMIN';
+    public const ROLE_SUBSCRIBER = 'ROLE_SUBSCRIBER';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -88,5 +91,15 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function subscribe(): void
+    {
+        $this->roles[] = self::ROLE_SUBSCRIBER;
+    }
+
+    public function grantAdminAccess(): void
+    {
+        $this->roles[] = self::ROLE_ADMIN;
     }
 }
