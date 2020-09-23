@@ -30,6 +30,20 @@ final class ArticleRepository extends ServiceEntityRepository
      */
     public function getById(int $id): Article
     {
+        $article = $this->find($id);
+
+        if (null === $article) {
+            throw EntityNotFoundException::byId('Article', $id);
+        }
+
+        return $article;
+    }
+
+    /**
+     * @throws EntityNotFoundException
+     */
+    public function getPublishedById(int $id): Article
+    {
         $query = $this->addPublished()
             ->andWhere('a.id = :id')
             ->setParameter('id', $id)
@@ -39,7 +53,7 @@ final class ArticleRepository extends ServiceEntityRepository
         $article = $query->getOneOrNullResult();
 
         if (null === $article) {
-            throw new EntityNotFoundException('Article', $id);
+            throw EntityNotFoundException::byId('Article', $id);
         }
 
         return $article;

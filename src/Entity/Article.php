@@ -9,10 +9,11 @@ use App\Exception\ArticleImageCannotBeEmptyException;
 use App\Exception\ArticleShortDescriptionCannotBeEmptyException;
 use App\Repository\ArticleRepository;
 use App\Util\SlugUtil;
+use App\ViewModel\CategoryPageArticle;
 use App\ViewModel\FullArticle;
 use App\ViewModel\HomePageArticle;
+use Assert\Assertion;
 use Doctrine\ORM\Mapping as ORM;
-use Webmozart\Assert\Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
@@ -25,6 +26,11 @@ class Article
      * @ORM\Column(type="integer")
      */
     private ?int $id = null;
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private Category $category;
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -58,12 +64,38 @@ class Article
      */
     private \DateTimeImmutable $updatedAt;
 
-    public function __construct(string $title)
+    public function __construct(Category $category, string $title)
     {
-        Assert::notEmpty($title);
+        Assertion::notEmpty($title);
 
+        $this->category = $category;
         $this->title = $title;
         $this->createdAt = $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getCategory(): Category
+    {
+        return $this->category;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function getShortDescription(): ?string
+    {
+        return $this->shortDescription;
+    }
+
+    public function getBody(): ?string
+    {
+        return $this->body;
     }
 
     public function getTitle(): string
@@ -95,7 +127,7 @@ class Article
     {
         return new HomePageArticle(
             $this->id,
-            'Set category title here', // TODO: set category title
+            $this->category->getName(),
             $this->title,
             $this->publicationDate,
             $this->image,
@@ -107,9 +139,20 @@ class Article
     {
         return new FullArticle(
             $this->id,
-            'Set category title here', // TODO: set category title
+            $this->category->getName(),
             $this->title,
             $this->body,
+            $this->publicationDate
+        );
+    }
+
+    public function getCategoryPageArticle(): CategoryPageArticle
+    {
+        return new CategoryPageArticle(
+            $this->id,
+            $this->title,
+            $this->image,
+            $this->shortDescription,
             $this->publicationDate
         );
     }

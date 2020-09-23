@@ -21,23 +21,24 @@
     ```sh
     $ mv .env .env.local
     ```
+   
+4. Create and run docker containers
 
-    ```dotenv
-    DATABASE_URL=mysql://<user>:<password>@127.0.0.1:3306/<db_name>
+    ```sh
+    $ docker-compose up -d --build
     ```
     
 4. Create a database and run migrations
 
     ```sh
-    ./bin/console doctrine:database:create
-    ./bin/console doctrine:migrations:migrate
+    $ docker-compose exec php-fpm bash
+    $ ./bin/console doctrine:database:create
+    $ ./bin/console doctrine:migrations:migrate
     ```   
-   
-5. Run local web-server using [Symfony CLI](https://symfony.com/download)
 
-    ```sh
-    $ symfony serve
-    ```
+## API
+
+You can import [postman_collection.json](postman_collection.json) file to Postman to you prepared requests to back-office API.
 
 ## Code style fixer
 
@@ -61,5 +62,5 @@ Tests
 To run unit tests just run the following command
 
 ```bash
-$ ./bin/phpunit
+$ docker-compose exec php-fpm ./bin/phpunit
 ```

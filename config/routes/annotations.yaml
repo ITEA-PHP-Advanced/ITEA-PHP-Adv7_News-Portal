@@ -2,6 +2,11 @@ controllers:
     resource: ../../src/Controller/
     type: annotation
 
+back_office:
+    resource: ../../src/Controller/BackOffice
+    type: annotation
+    prefix: /api
+
 kernel:
     resource: ../../src/Kernel.php
     type: annotation

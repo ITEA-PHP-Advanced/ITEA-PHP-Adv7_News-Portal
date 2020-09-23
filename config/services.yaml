@@ -22,6 +22,7 @@ services:
             - '../src/Exception'
             - '../src/Collection'
             - '../src/Util'
+            - '../src/Transformer'
             - '../src/Kernel.php'
 
     # controllers are imported separately to make sure services can be injected
@@ -35,3 +36,6 @@ services:
     App\Service\HomePageArticlesProvider:
         arguments:
             $showLimit: '%app.show_limit.articles_home_page%'
+
+    League\Fractal\Manager:
+        factory: ['@App\FractalManagerFactory', 'create']
