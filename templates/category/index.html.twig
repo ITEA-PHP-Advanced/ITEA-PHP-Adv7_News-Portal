@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ asset('css/category.css') }}">
+{% endblock %}
+
+{% block body %}
+    <h1 class="title">{{ category.name }} News</h1>
+    <section class="category-posts">
+        <div class="row">
+            {% for article in category.articles %}
+                <div class="col-3">
+                    <article>
+                        <a href="{{ path('app_article_view', {id: article.id}) }}">
+                            <img src="{{ article.image }}" alt="" class="img-fluid">
+                        </a>
+                        <a href="{{ path('app_article_view', {id: article.id}) }}" class="post-link">
+                            <h3>{{ article.title }}</h3>
+                        </a>
+                        <time>{{ article.publicationDate | formatted_date }}</time>
+                        <p>{{ article.shortDescription }}</p>
+                    </article>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

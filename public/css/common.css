@@ -58,7 +58,6 @@ main > .container {
 /***********************************/
 
 footer {
-    height: 100px;
     background-color: #333;
 }
 
@@ -67,4 +66,27 @@ footer > .copyright {
     color: #fff;
     line-height: 100px;
     text-align: center;
+}
+
+.subscription-form-heading {
+    margin: 10px 5px;
+    color: #cccccc;
+}
+
+.subscription-form {
+    text-align: right;
+}
+
+.subscription-form input {
+    margin: 5px;
+}
+
+.subscription-form-submit-btn {
+    margin: 5px -5px 10px 0;
+    color: #cccccc;
+    background-color: #DC3543;
+}
+
+.subscription-form-submit-btn:hover {
+    color: #fff;
 }

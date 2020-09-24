@@ -13,20 +13,8 @@
     </button>
 
     <nav class="collapse navbar-collapse" id="nav-items">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#">World</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Sport</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">IT</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Science</a>
-            </li>
-        </ul>
+        {{ render(controller('App\\Controller\\CategoryController::list')) }}
+
         <form class="form-inline my-2 my-md-0" action="" method="get">
             <input class="form-control search" type="text" placeholder="Search news...">
         </form>
