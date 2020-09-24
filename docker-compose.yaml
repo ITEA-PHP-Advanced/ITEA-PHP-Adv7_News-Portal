@@ -9,6 +9,9 @@ services:
     working_dir: /var/www/app
     depends_on:
       - mysql
+    environment:
+      PHP_IDE_CONFIG: "serverName=xdebug-app"
+      XDEBUG_CONFIG: "remote_host=host.docker.internal"
 
   nginx:
     image: nginx:1.19
