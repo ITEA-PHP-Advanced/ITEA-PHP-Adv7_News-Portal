@@ -27,7 +27,7 @@
     ```sh
     $ docker-compose up -d --build
     ```
-   
+    
 4. Create a database and run migrations
 
     ```sh
